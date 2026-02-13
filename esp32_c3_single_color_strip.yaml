@@ -1,0 +1,43 @@
+esphome:
+  name: esp32-c3-led-strip
+  friendly_name: ESP32-C3 LED Strip
+
+esp32:
+  board: esp32-c3-devkitm-1
+  framework:
+    type: esp-idf
+
+# Логи по UART/сети
+logger:
+
+# Управление из Home Assistant / ESPHome API
+api:
+
+ota:
+  - platform: esphome
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+
+  # Точка доступа, если Wi‑Fi недоступен
+  ap:
+    ssid: "ESP32-C3-LED-Fallback"
+    password: !secret fallback_ap_password
+
+captive_portal:
+
+# PWM-канал для MOSFET модуля на GPIO0
+output:
+  - platform: ledc
+    pin: GPIO0
+    id: pwm_output
+    frequency: 1000 Hz
+
+# Одноцветная лента с управлением яркостью
+light:
+  - platform: monochromatic
+    name: "Одноцветная LED лента"
+    output: pwm_output
+    restore_mode: RESTORE_DEFAULT_OFF
+    default_transition_length: 300ms
