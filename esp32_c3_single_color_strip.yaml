@@ -7,7 +7,7 @@ esp32:
   framework:
     type: esp-idf
 
-# Логи
+# Логи по UART/сети
 logger:
 
 # Управление из Home Assistant / ESPHome API
@@ -41,14 +41,3 @@ light:
     output: pwm_output
     restore_mode: RESTORE_DEFAULT_OFF
     default_transition_length: 300ms
-
-# Отдельная кнопка на GPIO2, не связана со светом
-binary_sensor:
-  - platform: gpio
-    pin:
-      number: GPIO2
-      mode:
-        input: true
-        pullup: true
-      inverted: true
-    name: "ESP32-C3 Кнопка"
